@@ -1,6 +1,6 @@
 ---
 title: Hello World
-tag: [无聊, 有趣]
+tag: [无聊, 有趣, 测试]
 categories: [分类]
 ---
 
