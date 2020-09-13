@@ -4,8 +4,8 @@
 
 # Site
 title: 明天是星期天欸
-subtitle: ""
-description: ""
+subtitle: 你不会找到路，除非你敢于迷路
+description: 
 keywords:
 author: 明天是星期天欸
 language: zh-CN
@@ -47,7 +47,7 @@ future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: false
+  auto_detect: true
   tab_replace: ""
   wrap: true
   hljs: false
