@@ -34,9 +34,11 @@ date: 2020-09-14 10:41:12
    > 
    >
    > // 以root权限开启
-   >
-   > su
    > setprop service.adb.tcp.port 5555
+   >
+   > stop adbd
+   >
+   > start adbd
 
 2. 连接
 
