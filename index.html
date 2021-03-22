@@ -145,7 +145,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">5</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">6</span></a>
 
   </li>
   </ul>
@@ -192,7 +192,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -238,6 +238,91 @@
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/22/vue%E5%AE%9E%E7%8E%B0v-down%E6%8C%87%E4%BB%A4%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="明天是星期天">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="明天是星期天">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/22/vue%E5%AE%9E%E7%8E%B0v-down%E6%8C%87%E4%BB%A4%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">vue实现v-down指令下载文件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-03-22 09:25:50 / 修改时间：09:47:28" itemprop="dateCreated datePublished" datetime="2021-03-22T09:25:50+08:00">2021-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>前段时间在项目中遇到文件需要下载，a标签发现在下载jpg、txt文件时，并不会直接下载，而是会在浏览器中打开文件，即使给a标签添加了download属性，也无济于事</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;static/img/1.jpg&quot;</span> <span class="attr">download</span>=<span class="string">&quot;2.jpg&quot;</span>&gt;</span>下载<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="实现v-down（支持Jpg、Txt、Exact、Word、Pdf）"><a href="#实现v-down（支持Jpg、Txt、Exact、Word、Pdf）" class="headerlink" title="实现v-down（支持Jpg、Txt、Exact、Word、Pdf）"></a>实现v-down（支持Jpg、Txt、Exact、Word、Pdf）</h3><p>Vue页面中使用指令v-down</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;span v-down&#x3D;&quot;item.Url&quot;&gt;(附件)&lt;&#x2F;span&gt;</span><br></pre></td></tr></table></figure>
+
+<p>具体实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> baseDownloadUrl = <span class="string">&quot;https://xxxxx.cn&quot;</span>; <span class="comment">// 域名</span></span><br><span class="line"><span class="comment">// 添加自定义v-down指令</span></span><br><span class="line">Vue.directive(<span class="string">&quot;down&quot;</span>, &#123;</span><br><span class="line">  inserted: <span class="function">(<span class="params">el, binding</span>) =&gt;</span> &#123;</span><br><span class="line">    el.style.cssText = <span class="string">&quot;cursor: pointer;color:red;&quot;</span>;</span><br><span class="line">    el.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(binding.value);</span><br><span class="line">      <span class="keyword">let</span> link = <span class="built_in">document</span>.createElement(<span class="string">&quot;a&quot;</span>); <span class="comment">// 创建a标签</span></span><br><span class="line">      link.style.display = <span class="string">&quot;none&quot;</span>;</span><br><span class="line">      link.href = baseDownloadUrl + binding.value; <span class="comment">// 设置下载地址</span></span><br><span class="line">      link.setAttribute(<span class="string">&quot;download&quot;</span>, <span class="string">&quot;&quot;</span>); <span class="comment">// 添加downLoad属性</span></span><br><span class="line">      <span class="built_in">document</span>.body.appendChild(link);</span><br><span class="line">      link.click();</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当下载文件中存在jpg、txt等浏览器可以直接预览的文件时，上面的方法就会出现问题，即使加了download仍然会在浏览器中打开下载文件,我们可以将下载地址借助Blob转换成二进制,然后作为a标签的href属性，配合download属性，实现下载</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Vue.directive(<span class="string">&quot;down&quot;</span>, &#123;</span><br><span class="line">  inserted: <span class="function">(<span class="params">el, binding</span>) =&gt;</span> &#123;</span><br><span class="line">    el.style.cssText = <span class="string">&quot;cursor: pointer;color:write;&quot;</span>;</span><br><span class="line">    el.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(binding.value);</span><br><span class="line">      <span class="keyword">let</span> link = <span class="built_in">document</span>.createElement(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">      <span class="keyword">let</span> url = baseDownloadUrl + binding.value;</span><br><span class="line">      <span class="comment">// 这里是将url转成blob地址，</span></span><br><span class="line">      fetch(url)</span><br><span class="line">        .then(<span class="function">(<span class="params">res</span>) =&gt;</span> res.blob())</span><br><span class="line">        .then(<span class="function">(<span class="params">blob</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// 将链接地址字符内容转变成blob地址</span></span><br><span class="line">          link.href = URL.createObjectURL(blob);</span><br><span class="line">          <span class="built_in">console</span>.log(link.href);</span><br><span class="line">          link.download = <span class="string">&quot;&quot;</span>;</span><br><span class="line">          <span class="built_in">document</span>.body.appendChild(link);</span><br><span class="line">          link.click();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>上面的这种方法，将地址进行了转化成blob，从而实现对jpg、txt 文件的下载</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+  
+  
+  
+
       
   
   
