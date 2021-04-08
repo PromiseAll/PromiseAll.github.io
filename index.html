@@ -140,12 +140,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">7</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">8</span></a>
 
   </li>
   </ul>
@@ -192,14 +192,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
@@ -317,6 +317,119 @@
 <figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">▾ node_modules</span><br><span class="line">  ▸ .pnpm</span><br><span class="line">  ▾ express</span><br><span class="line">    ▸ <span class="class"><span class="keyword">lib</span></span></span><br><span class="line">      History.md</span><br><span class="line">      index.js</span><br><span class="line">      LICENSE</span><br><span class="line">      package.json</span><br><span class="line">      Readme.md</span><br><span class="line">    .modules.yaml</span><br></pre></td></tr></table></figure>
 
 <p>express 没有 node_modules? express 的所有依赖都去哪里了？ 诀窍是 <code>express</code> 只是一个软链。 当 Node.js 解析依赖的时候，它使用这些依赖的真实位置，所以它不保留软链</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/01/%E7%BA%AFCSS%E5%AF%BC%E8%88%AA%E6%A0%8F%E5%88%87%E6%8D%A2%E6%96%B9%E6%A1%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="明天是星期天">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="明天是星期天">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/01/%E7%BA%AFCSS%E5%AF%BC%E8%88%AA%E6%A0%8F%E5%88%87%E6%8D%A2%E6%96%B9%E6%A1%88/" class="post-title-link" itemprop="url">纯CSS导航栏切换方案</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-01 09:51:22" itemprop="dateCreated datePublished" datetime="2021-04-01T09:51:22+08:00">2021-04-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-04-08 10:06:59" itemprop="dateModified" datetime="2021-04-08T10:06:59+08:00">2021-04-08</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/html/" itemprop="url" rel="index"><span itemprop="name">html</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>如何通过点击某个元素，控制其他元素,不用 Javascript，使用纯 CSS 方案，实现类似下图的导航栏切换</p>
+<img src="/2021/04/01/%E7%BA%AFCSS%E5%AF%BC%E8%88%AA%E6%A0%8F%E5%88%87%E6%8D%A2%E6%96%B9%E6%A1%88/1.gif" class="">
+
+<h3 id="target-伪类选择器"><a href="#target-伪类选择器" class="headerlink" title=":target 伪类选择器"></a>:target 伪类选择器</h3><p>首先，我们要解决的问题是如何接收点击事件，这里第一种方法我们采用 :target 伪类接收</p>
+<blockquote>
+<p>:target 是 CSS3 新增的一个伪类，可用于选取当前活动的目标元素。当然 URL 末尾带有锚名称 #，就可以指向文档内某个具体的元素，这个被链接的元素就是目标元素(target element)，它需要一个 id 去匹配文档中的 target</p>
+</blockquote>
+<p>假设我们的 <code>HTML</code> 代码如下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;nav&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>列表2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>列表1内容:123456<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>列表2内容:abcdefgkijkl<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>由于要使用 <code>:target</code>，需要 HTML 锚点，以及锚点对应的 HTML 片段。所以上面的结构要变成</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;nav&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#content1&quot;</span>&gt;</span>列表1<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#content2&quot;</span>&gt;</span>列表2<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;content1&quot;</span>&gt;</span>列表1内容:123456<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;content2&quot;</span>&gt;</span>列表2内容:abcdefgkijkl<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样，上面 <a href="#content1"> 中的锚点 #content1 就对应了列表 1 <div id="content1"> ，锚点 2 与之相同对应列表 2，接下来，我们就可以使用 :target 接受到点击事件，并操作对应的 DOM 了</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#content1</span>,</span><br><span class="line"><span class="selector-id">#content2</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#content1</span><span class="selector-pseudo">:target</span>,</span><br><span class="line"><span class="selector-id">#content2</span><span class="selector-pseudo">:target</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的 CSS 代码，一开始页面中的 #content1 与 #content2 都是隐藏的，当点击列表 1 触发 href=”#content1” 时，页面的 URL 会发生变化</p>
+<ul>
+<li>由 <a target="_blank" rel="noopener" href="http://www.example.com/">www.example.com</a> 变成 <a target="_blank" rel="noopener" href="http://www.example.com/#content1">www.example.com#content1</a></li>
+<li>接下来会触发 #content1:target{ } 这条 CSS 规则，#content1 元素由 <code>display:none</code> 变成 <code>display:block</code> ，点击列表 2 亦是如此</li>
+</ul>
+<p>如此即达到了 Tab 切换，当然除了 content1 content2 的切换，我们的 li 元素样式也要不断变化，这个时候，就需要我们在 DOM 结构布局的时候多留心，在 #content1:target 触发的时候可以同时去修改 li 的样式</p>
+<p>在上面 HTML 的基础上，再修改一下，变成如下结构</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;content1&quot;</span>&gt;</span>列表1内容:123456<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;content2&quot;</span>&gt;</span>列表2内容:abcdefgkijkl<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;nav&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#content1&quot;</span>&gt;</span>列表1<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#content2&quot;</span>&gt;</span>列表2<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>仔细对比一下与上面结构的异同，这里我只是将 ul 从两个 content 上面挪到了下面，为什么要这样做呢</p>
+<blockquote>
+<p>E<del>F{ cssRules } ，CSS3 兄弟选择符(E</del>F) ，选择 E 元素后面的所有兄弟元素 F。</p>
+<p>注意这里，最重要的一句话是 E~F 只能选择 E 元素 <strong>之后</strong> 的 F 元素，所以顺序就显得很重要了</p>
+</blockquote>
+<p>在这样调换位置之后，通过兄弟选择符 ~ 可以操作整个 <code>.nav</code> 的样式</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#content1</span><span class="selector-pseudo">:target</span> ~ <span class="selector-class">.nav</span> <span class="selector-tag">li</span> &#123;</span><br><span class="line">  // 改变li元素的背景色和字体颜色</span><br><span class="line">  &amp;<span class="selector-pseudo">:first-child</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#ff7300</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#content2</span><span class="selector-pseudo">:target</span> ~ <span class="selector-class">.nav</span> <span class="selector-tag">li</span> &#123;</span><br><span class="line">  // 改变li元素的背景色和字体颜色</span><br><span class="line">  &amp;<span class="selector-pseudo">:last-child</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#ff7300</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的 CSS 规则中，我们使用 ~ 选择符，在 #content1:target 和 #content2:target 触发的时候分别去控制两个导航 li 元素的样式，至此两个问题，1. 如何接收点击事件 与 2. 如何操作相关 DOM 都已经解决，剩下的是一些小样式的修补工作</p>
+<h3 id="amp-amp"><a href="#amp-amp" class="headerlink" title=" &amp;&amp; "></a><input type="radio"> &amp;&amp; <label for=""></h3><p>上面的方法通过添加 <a> 标签添加页面锚点的方式接收点击事件。<br>这里还有一种方式能够接收到点击事件，就是拥有 checked 属性的表单元素， <input type="radio"> 或者 <input type="checkbox"> 。</p>
 
       
     </div>
