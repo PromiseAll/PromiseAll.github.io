@@ -69,3 +69,31 @@ Vue.directive("down", {
 ```
 
 上面的这种方法，将地址进行了转化成blob，从而实现对jpg、txt 文件的下载
+
+### 使用axios下载
+
+```js
+this.$axios({
+  method: 'get',
+  url: '/task-common-api/api/v1/task/whitelist/template',
+  responseType: "blob"
+})
+.then(function (response) {
+  console.log(response);
+  if(response.data.type == "application/octet-stream") {
+    const filename = response.headers["content-disposition"];
+    const blob = new Blob([response.data]);
+    var downloadElement = document.createElement("a");
+    var href = window.URL.createObjectURL(blob);
+    downloadElement.href = href;
+    downloadElement.download = filename.split("filename=")[1];
+    document.body.appendChild(downloadElement);
+    downloadElement.click();
+    document.body.removeChild(downloadElement);
+    window.URL.revokeObjectURL(href);
+  }
+})
+.catch(function (error) {
+  console.log(error);
+});
+```
