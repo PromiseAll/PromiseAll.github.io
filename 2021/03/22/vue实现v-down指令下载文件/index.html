@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/favicon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前段时间在项目中遇到文件需要下载，a标签发现在下载jpg、txt文件时，并不会直接下载，而是会在浏览器中打开文件，即使给a标签添加了download属性，也无济于事 1&lt;a href&#x3D;&quot;static&#x2F;img&#x2F;1.jpg&quot; download&#x3D;&quot;2.jpg&quot;&gt;下载&lt;&#x2F;a&gt;  实现v-down（支持Jpg、Txt、Exact、Word、Pd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue实现v-down指令下载文件">
+<meta property="og:url" content="http://example.com/2021/03/22/vue%E5%AE%9E%E7%8E%B0v-down%E6%8C%87%E4%BB%A4%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="明天是星期天">
+<meta property="og:description" content="前段时间在项目中遇到文件需要下载，a标签发现在下载jpg、txt文件时，并不会直接下载，而是会在浏览器中打开文件，即使给a标签添加了download属性，也无济于事 1&lt;a href&#x3D;&quot;static&#x2F;img&#x2F;1.jpg&quot; download&#x3D;&quot;2.jpg&quot;&gt;下载&lt;&#x2F;a&gt;  实现v-down（支持Jpg、Txt、Exact、Word、Pd">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-22T01:25:50.000Z">
+<meta property="article:modified_time" content="2023-10-13T09:34:20.166Z">
+<meta property="article:author" content="明天是星期天">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/03/22/vue%E5%AE%9E%E7%8E%B0v-down%E6%8C%87%E4%BB%A4%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2021/03/22/vue%E5%AE%9E%E7%8E%B0v-down%E6%8C%87%E4%BB%A4%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/","path":"2021/03/22/vue实现v-down指令下载文件/","title":"vue实现v-down指令下载文件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>vue实现v-down指令下载文件 | 明天是星期天</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">明天是星期天</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">你不会找到路，除非你敢于迷路</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">10</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0v-down%EF%BC%88%E6%94%AF%E6%8C%81Jpg%E3%80%81Txt%E3%80%81Exact%E3%80%81Word%E3%80%81Pdf%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">实现v-down（支持Jpg、Txt、Exact、Word、Pdf）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8axios%E4%B8%8B%E8%BD%BD"><span class="nav-number">2.</span> <span class="nav-text">使用axios下载</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="明天是星期天"
+      src="/images/favicon.png">
+  <p class="site-author-name" itemprop="name">明天是星期天</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/PromiseAll" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;PromiseAll" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2238480780@qq.com" title="E-Mail → 2238480780@qq.com" rel="noopener me"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/22/vue%E5%AE%9E%E7%8E%B0v-down%E6%8C%87%E4%BB%A4%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="明天是星期天">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="明天是星期天">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="vue实现v-down指令下载文件 | 明天是星期天">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vue实现v-down指令下载文件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-22 09:25:50" itemprop="dateCreated datePublished" datetime="2021-03-22T09:25:50+08:00">2021-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-13 17:34:20" itemprop="dateModified" datetime="2023-10-13T17:34:20+08:00">2023-10-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>前段时间在项目中遇到文件需要下载，a标签发现在下载jpg、txt文件时，并不会直接下载，而是会在浏览器中打开文件，即使给a标签添加了download属性，也无济于事</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;static/img/1.jpg&quot;</span> <span class="attr">download</span>=<span class="string">&quot;2.jpg&quot;</span>&gt;</span>下载<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="实现v-down（支持Jpg、Txt、Exact、Word、Pdf）"><a href="#实现v-down（支持Jpg、Txt、Exact、Word、Pdf）" class="headerlink" title="实现v-down（支持Jpg、Txt、Exact、Word、Pdf）"></a>实现v-down（支持Jpg、Txt、Exact、Word、Pdf）</h3><p>Vue页面中使用指令v-down</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;span v-down=&quot;item.Url&quot;&gt;(附件)&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<p>具体实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> baseDownloadUrl = <span class="string">&quot;https://xxxxx.cn&quot;</span>; <span class="comment">// 域名</span></span><br><span class="line"><span class="comment">// 添加自定义v-down指令</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">directive</span>(<span class="string">&quot;down&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">inserted</span>: <span class="function">(<span class="params">el, binding</span>) =&gt;</span> &#123;</span><br><span class="line">    el.<span class="property">style</span>.<span class="property">cssText</span> = <span class="string">&quot;cursor: pointer;color:red;&quot;</span>;</span><br><span class="line">    el.<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(binding.<span class="property">value</span>);</span><br><span class="line">      <span class="keyword">let</span> link = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;a&quot;</span>); <span class="comment">// 创建a标签</span></span><br><span class="line">      link.<span class="property">style</span>.<span class="property">display</span> = <span class="string">&quot;none&quot;</span>;</span><br><span class="line">      link.<span class="property">href</span> = baseDownloadUrl + binding.<span class="property">value</span>; <span class="comment">// 设置下载地址</span></span><br><span class="line">      link.<span class="title function_">setAttribute</span>(<span class="string">&quot;download&quot;</span>, <span class="string">&quot;&quot;</span>); <span class="comment">// 添加downLoad属性</span></span><br><span class="line">      <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(link);</span><br><span class="line">      link.<span class="title function_">click</span>();</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当下载文件中存在jpg、txt等浏览器可以直接预览的文件时，上面的方法就会出现问题，即使加了download仍然会在浏览器中打开下载文件,我们可以将下载地址借助Blob转换成二进制,然后作为a标签的href属性，配合download属性，实现下载</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Vue</span>.<span class="title function_">directive</span>(<span class="string">&quot;down&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">inserted</span>: <span class="function">(<span class="params">el, binding</span>) =&gt;</span> &#123;</span><br><span class="line">    el.<span class="property">style</span>.<span class="property">cssText</span> = <span class="string">&quot;cursor: pointer;color:write;&quot;</span>;</span><br><span class="line">    el.<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(binding.<span class="property">value</span>);</span><br><span class="line">      <span class="keyword">let</span> link = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">      <span class="keyword">let</span> url = baseDownloadUrl + binding.<span class="property">value</span>;</span><br><span class="line">      <span class="comment">// 这里是将url转成blob地址，</span></span><br><span class="line">      <span class="title function_">fetch</span>(url)</span><br><span class="line">        .<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> res.<span class="title function_">blob</span>())</span><br><span class="line">        .<span class="title function_">then</span>(<span class="function">(<span class="params">blob</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// 将链接地址字符内容转变成blob地址</span></span><br><span class="line">          link.<span class="property">href</span> = <span class="variable constant_">URL</span>.<span class="title function_">createObjectURL</span>(blob);</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">log</span>(link.<span class="property">href</span>);</span><br><span class="line">          link.<span class="property">download</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">          <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(link);</span><br><span class="line">          link.<span class="title function_">click</span>();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>上面的这种方法，将地址进行了转化成blob，从而实现对jpg、txt 文件的下载</p>
+<h3 id="使用axios下载"><a href="#使用axios下载" class="headerlink" title="使用axios下载"></a>使用axios下载</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.$axios(&#123;</span><br><span class="line">  <span class="attr">method</span>: <span class="string">&#x27;get&#x27;</span>,</span><br><span class="line">  <span class="attr">url</span>: <span class="string">&#x27;/task-common-api/api/v1/task/whitelist/template&#x27;</span>,</span><br><span class="line">  <span class="attr">responseType</span>: <span class="string">&quot;blob&quot;</span></span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">response</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(response);</span><br><span class="line">  <span class="keyword">if</span>(response.<span class="property">data</span>.<span class="property">type</span> == <span class="string">&quot;application/octet-stream&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> filename = response.<span class="property">headers</span>[<span class="string">&quot;content-disposition&quot;</span>];</span><br><span class="line">    <span class="keyword">const</span> blob = <span class="keyword">new</span> <span class="title class_">Blob</span>([response.<span class="property">data</span>]);</span><br><span class="line">    <span class="keyword">var</span> downloadElement = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> href = <span class="variable language_">window</span>.<span class="property">URL</span>.<span class="title function_">createObjectURL</span>(blob);</span><br><span class="line">    downloadElement.<span class="property">href</span> = href;</span><br><span class="line">    downloadElement.<span class="property">download</span> = filename.<span class="title function_">split</span>(<span class="string">&quot;filename=&quot;</span>)[<span class="number">1</span>];</span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(downloadElement);</span><br><span class="line">    downloadElement.<span class="title function_">click</span>();</span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">removeChild</span>(downloadElement);</span><br><span class="line">    <span class="variable language_">window</span>.<span class="property">URL</span>.<span class="title function_">revokeObjectURL</span>(href);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">catch</span>(<span class="keyword">function</span> (<span class="params">error</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(error);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/17/%E5%88%A9%E7%94%A8nodejs%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9B%B4%E6%92%AD/" rel="prev" title="利用nodejs实现简单直播">
+                  <i class="fa fa-angle-left"></i> 利用nodejs实现简单直播
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/01/%E7%BA%AFCSS%E5%AF%BC%E8%88%AA%E6%A0%8F%E5%88%87%E6%8D%A2%E6%96%B9%E6%A1%88/" rel="next" title="纯CSS导航栏切换方案">
+                  纯CSS导航栏切换方案 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">明天是星期天</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
